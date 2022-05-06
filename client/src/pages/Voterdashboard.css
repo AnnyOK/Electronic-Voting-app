@@ -1,0 +1,20 @@
+ul{
+    display:flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    color:green;
+}
+li{
+    margin:auto;
+    display:flex;
+    flex-direction:column;
+    width:250px;
+}
+button{
+    background-color:green;
+    border-radius:5px;
+    border:none;
+    width:100px;
+    flex:1;
+
+}

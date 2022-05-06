@@ -1,0 +1,14 @@
+POST http://localhost:4000/registerVoter
+Content-Type: application/json;charset=utf-8
+
+
+{
+    "name":"okpala anayo",
+    "voteStatus":false ,
+    "dateOfBirth": "102948",
+    "stateOfOrigin": "imo",
+    "town": "hello",
+    "pollingUnit":23,
+    "lga": "id",
+    "password":"Eagle"
+    }

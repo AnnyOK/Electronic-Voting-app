@@ -1,0 +1,12 @@
+h1{
+    font-size:3rem;
+    text-align: center;
+    color: grey;
+    margin:0;
+    padding: 3px;
+}
+p{
+    color:green;
+    text-align: right;
+    margin-right:50px;
+}
