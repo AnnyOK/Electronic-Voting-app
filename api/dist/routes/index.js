@@ -12,7 +12,7 @@ router.get('/aspirants', controllers_1.getAspirants);
 router.get('/aspirant/:id', controllers_1.getAspirant);
 router.post('/register', controllers_1.createVote);
 router.post('/registerApply', controllers_1.apply);
-router.post('/registerVoter', controllers_1.register);
+router.post('/registerVoter', controllers_1.register, controllers_1.authomail);
 router.get('/votes/:id', controllers_1.getVote);
 router.delete('/votes/:id', controllers_1.deleteVote);
 router.put('/vote-status/:id', controllers_1.updateVote);

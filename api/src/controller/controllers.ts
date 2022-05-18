@@ -1,7 +1,8 @@
-import { Request, Response } from "express";
+import { Request, Response , NextFunction} from "express";
 import Vote from "../models/Votelsmodels";
 import Apply from "../models/aspirantModel";
 import bcrypt from "bcrypt";
+import nodemailer from "nodemailer"
 
 export const getVotes = async (req: Request, res: Response) => {
   try {
@@ -45,8 +46,32 @@ export const createVote = async (req: Request, res: Response) => {
     res.status(500).json({ msg: err });
   }
 };
+export const authomail =async(req: Request, res: Response)=>{
+  console.log("authmail")
+const transporter = nodemailer.createTransport({
+  host:"smtp-mail.outlook.com",
+  port:587,
+  auth:{
+    user:"anny.okpala@hotmail.com",
+    pass:"greatman55",
+  }
+}as any)
+const options ={ 
+  from:"anny.okpala@hotmail.com",
+  to:"okpalaanayo@gmail.com",
+  subject:"testing nodemailer",
+  text:"Your voter registration in successful"
+}
+transporter.sendMail(options,(err,info)=>{
+  if(err){
+    console.log(err);
+    return
+  }
+  console.log("sent:" + info.response)
+})
+}
 
-export const register = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response,next: NextFunction) => {
   try {
     const saltPassword = await bcrypt.genSalt(10);
     const securePassword = await bcrypt.hash(req.body.password, saltPassword);
@@ -88,6 +113,7 @@ export const register = async (req: Request, res: Response) => {
   } catch (err) {
     res.status(500).json({ msg: err });
   }
+  next();
 };
 
 export const apply = async (req: Request, res: Response) => {

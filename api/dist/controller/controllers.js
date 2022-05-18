@@ -3,10 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getVoter = exports.updateVote = exports.deleteVote = exports.getVote = exports.apply = exports.register = exports.createVote = exports.getAspirant = exports.getAspirants = exports.getVotes = void 0;
+exports.getVoter = exports.updateVote = exports.deleteVote = exports.getVote = exports.apply = exports.register = exports.authomail = exports.createVote = exports.getAspirant = exports.getAspirants = exports.getVotes = void 0;
 const Votelsmodels_1 = __importDefault(require("../models/Votelsmodels"));
 const aspirantModel_1 = __importDefault(require("../models/aspirantModel"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const nodemailer_1 = __importDefault(require("nodemailer"));
 const getVotes = async (req, res) => {
     try {
         const votes = await Votelsmodels_1.default.find({});
@@ -53,7 +54,32 @@ const createVote = async (req, res) => {
     }
 };
 exports.createVote = createVote;
-const register = async (req, res) => {
+const authomail = async (req, res) => {
+    console.log("authmail");
+    const transporter = nodemailer_1.default.createTransport({
+        host: "smtp-mail.outlook.com",
+        port: 587,
+        auth: {
+            user: "anny.okpala@hotmail.com",
+            pass: "greatman55",
+        }
+    });
+    const options = {
+        from: "anny.okpala@hotmail.com",
+        to: "okpalaanayo@gmail.com",
+        subject: "testing nodemailer",
+        text: "this is it"
+    };
+    transporter.sendMail(options, (err, info) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        console.log("sent:" + info.response);
+    });
+};
+exports.authomail = authomail;
+const register = async (req, res, next) => {
     try {
         const saltPassword = await bcrypt_1.default.genSalt(10);
         const securePassword = await bcrypt_1.default.hash(req.body.password, saltPassword);
@@ -84,6 +110,7 @@ const register = async (req, res) => {
     catch (err) {
         res.status(500).json({ msg: err });
     }
+    next();
 };
 exports.register = register;
 const apply = async (req, res) => {
